@@ -42,7 +42,8 @@ function setCellSize(size){
 //high level function to add everything necessary for a new graph and set it up
 function addGraph(ip){
 	//make a new cell containing a new card @ index hosts.length with 'ip' as the src
-	document.getElementById('card_grid').appendChild(newCell(newCard(hosts.length, ip)));
+	//to insert @ end:    document.getElementById('card_grid').appendChild(newCell(newCard(hosts.length, ip)));
+	document.getElementById('card_grid').insertBefore(newCell(newCard(hosts.length, ip)), document.getElementById('newGraph_Button_Cell'));
 	hosts.push(ip);
 }
 
@@ -73,11 +74,12 @@ function newCard(index, ip){
 	img.setAttribute('height',imgHeight);
 	img.setAttribute('style', "padding:"+imgPadding+"px;");
 	//img.setAttirbute('border', 0);
-	img.setAttribute('alt', "(0__0) can't connect to image server "+index+"...");
+	img.setAttribute('onerror', this.src="nanowires.png");
+	img.setAttribute('alt', "(0__0) can't connect to an image server "+index+"...");
 	if(index < hosts.length){
 		img.src = "http://"+ip+"/DataServer/GetFrontPanelControlImage";
 	}else{
-		img.src = "invalid_ip.png";
+		img.src = "nanowires.png";
 	}
 	card__media.appendChild(img);
 	
@@ -113,34 +115,6 @@ function newCard(index, ip){
 	//ipForm.setAttribute('onsubmit', 'updateHost('+index+', '+document.getElementById("host"+index).value+')');
 	
 	return card;
-	
-	//innerDiv.className = 'block-2';
-
-	// The variable iDiv is still good... Just append to it.
-	//card.appendChild(innerDiv);
-	
-	
-	
-	/*need to create:
-	//THIS IS THE CELL://<div align="center" class="mdl-cell mdl-cell--6-col" id="cell1">
-		<!--this align="center" centers the image in the card, last one centered the cell stuff thing in the grid -->
-		
-	****<div align="center" class="chart-card mdl-card mdl-shadow--4dp">
-
-			<div>
-				<!-- Simple Textfield -->
-				<form action="#" onsubmit="updateHost(1, document.getElementById('host1').value)">
-				  <div class="mdl-textfield mdl-js-textfield">
-					<input class="mdl-textfield__input" type="text" id="host1">
-					<label class="mdl-textfield__label" for="host1">Data Host IP</label>
-				  </div>
-				</form>
-			</div>
-			
-		</div>
-		
-				///END CELL////</div>
-				*/
 }
 
 function updateImage(whichImage){
@@ -184,35 +158,50 @@ timeout = setInterval(updateImages, 1000);
 				<a class="mdl-navigation__link" href="https://www.levylab.org/">LevyLab Homepage</a>
 				<a class="mdl-navigation__link" href="https://www.pqi.org/">Pittsburgh Quantum Institute</a>
 				<a class="mdl-navigation__link" href="http://pitt.edu/">University of Pittsburgh</a>
+				<br>
 				<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onClick="setCellSize(6)">
 				Reset Cell Size
 				</button>
-				<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onClick="addGraph('localhost:8003')">
-					Create New Cell
-				</button>
-			</nav>
-			<div>
-			
+				<br>
+				<div>
 			<!-- Slider with Starting Value -->
 				<input class="mdl-slider mdl-js-slider" type="range"
 				  min="1" max="12" value="6" tabindex="0" onInput="setCellSize(value)">
 			</div>
-		</div>
-		
-	  <main class="mdl-layout__content">
-		<div class="page-content">
-		<!-- Your content goes here -->
-			<!-- GRID -->
-			<div class="mdl-grid" id="card_grid">
+				<br>
 				
-			</div>
+				<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onClick="addGraph('localhost:8003')">
+					Create New Cell
+				</button>
+			</nav>
+			
 		</div>
 		
-	  </main>
-	  
+		<main class="mdl-layout__content">
+			<div class="page-content">
+			<!-- Your content goes here -->
+				<!-- GRID -->
+				<div class="mdl-grid" id="card_grid">
+					<div align="center" class="mdl-cell mdl-cell--6-col" id="newGraph_Button_Cell">
+						<!-- Colored FAB button with ripple -->
+						<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+							<i class="material-icons">add</i>
+						</button>
+
+						<div>
+							<!-- Textfield with Floating Label -->
+							<form action="#" onsubmit="addGraph(document.getElementById('newGraphInput').value)">
+							  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+								<input class="mdl-textfield__input" type="text" id="newGraphInput">
+								<label class="mdl-textfield__label" for="newGraphInput">Data Host IP ...</label>
+							  </div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
 	</div>
-	  
-	  
 	
 
 </body>
