@@ -77,7 +77,8 @@ function newCard(index, ip){
 	img.setAttribute('onerror', this.src="nanowires.png");
 	img.setAttribute('alt', "(0__0) can't connect to an image server "+index+"...");
 	if(index < hosts.length){
-		img.src = "http://"+ip+"/DataServer/GetFrontPanelControlImage";
+		//img.src = "http://"+ip+"/DataServer/GetFrontPanelControlImage";
+		img.src = "http://"+ip;  //ending has to be hard coded for now depending on which graph
 	}else{
 		img.src = "nanowires.png";
 	}
@@ -118,7 +119,8 @@ function newCard(index, ip){
 }
 
 function updateImage(whichImage){
-	document.getElementById("img"+whichImage).src = ("http://"+hosts[whichImage]+"/DataServer/GetFrontPanelControlImage?time=" + new Date().getTime());
+	//document.getElementById("img"+whichImage).src = ("http://"+hosts[whichImage]+"/DataServer/GetFrontPanelControlImage?time=" + new Date().getTime());
+	document.getElementById("img"+whichImage).src = ("http://"+hosts[whichImage]+"?time=" + new Date().getTime());
 }
 
 function updateImages(){
