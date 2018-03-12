@@ -9,9 +9,17 @@
 <style>
 .chart-card.mdl-card {
   //width: 788px;
+  //color: #aaaaaa;
 }
+
 .chart-card.mdl-card__media {
-  color: #ffffff;
+  //color: #aaaaaa;
+  width: 100%;
+}
+.mdl-card__media > img {
+  //max-width: 100%;
+  width: 100%;
+  color: #aaaaaa;
 }
 
 </style>
@@ -19,8 +27,10 @@
 <script>
 var hosts = [];
 var imgWidth = 768;
-var imgHeight = 512;
-var imgPadding = 10;
+var imgHeight = 513;
+var imgPadding = 0;
+var imgBorder = 0;
+var gridColumns = 6; //keep track of grid sizing
 var width;
 var height;
 
@@ -28,14 +38,14 @@ var height;
 
 function initialize(){
 	updateImages();
-	width = document.body.clientWidth;
-	height = document.body.clientHeight;
-	window.addEventListener("resize", function(event){
-		width = document.documentElement.clientWidth;
-		imgWidth = width;
-		height = document.documentElement.clientHeight;
-		imgHeight = height;
-	});
+	//width = document.body.clientWidth;
+	//height = document.body.clientHeight;
+	//unused for the moment, but can't hurt (too much)
+	//window.addEventListener("resize", function(event){
+	//	width = document.documentElement.clientWidth;
+	//	height = document.documentElement.clientHeight;
+	//});
+	loadPreset1LocalHost();
 }
 
 //newIp should include port
@@ -43,24 +53,42 @@ function updateHost(whichHost, newIp){
 	hosts[whichHost] = newIp;
 }
 
+function loadPreset1LocalHost(){
+	loadPreset1('localhost:8001');
+}
+function loadPreset(preset, hostIP){
+	if(preset == 1){
+		loadPreset1(hostIP);
+	}
+	
+}
+function loadPreset1(hostIP){
+	addGraph(hostIP+"/DataServer/GetTransconductanceIntensity");
+	addGraph(hostIP+"/DataServer/GetConductanceIntensity");
+	addGraph(hostIP+"/DataServer/GetRawTransconductance");
+	addGraph(hostIP+"/DataServer/GetRawConductance");
+}
+
 function setCellSize(size){
+	gridColumns = size;
 	elements = document.getElementsByClassName("mdl-cell");
-	//.className = ("mdl-cell mdl-cell--"+size+"-col");
 	for(i=0; i<elements.length; i++){
-		elements.item(i).className = ("mdl-cell mdl-cell--"+size+"-col");
+		//elements.item(i).className = ("chart-card mdl-cell mdl-card mdl-shadow--16dp mdl-color--blue-grey-100 mdl-cell--"+gridColumns+"-col");
+		elements.item(i).className = ("chart-card mdl-cell mdl-card mdl-shadow--16dp mdl-cell--"+gridColumns+"-col"); // mdl-color--blue-grey-100
 	}
 }
 //high level function to add everything necessary for a new graph and set it up
 function addGraph(ip){
 	//make a new cell containing a new card @ index hosts.length with 'ip' as the src
 	//to insert @ end:    document.getElementById('card_grid').appendChild(newCell(newCard(hosts.length, ip)));
-	document.getElementById('card_grid').insertBefore(newCell(newCard(hosts.length, ip)), document.getElementById('newGraph_Button_Cell'));
+	document.getElementById('card_grid').insertBefore(newCard(hosts.length, ip), document.getElementById('newGraph_Button_Cell'));
 	hosts.push(ip);
 }
 
+//unused now(hopefully)
 function newCell(content){
 	var cell = document.createElement('div');
-	cell.className = 'mdl-cell mdl-cell--12-col';
+	cell.className = 'mdl-cell mdl-cell--'+gridColumns+'-col';
 	cell.setAttribute('align','center');
 	cell.appendChild(content);
 	return cell;
@@ -70,27 +98,30 @@ function newCard(index, ip){
 	// create new card and put it in the grid
 	var card = document.createElement('div');
 	card.id = 'card'+index;
-	card.className = 'chart-card mdl-card mdl-shadow--16dp mdl-color--blue-grey-100';
+	card.className = 'chart-card mdl-cell mdl-cell--'+gridColumns+'-col mdl-color--grey-300 mdl-card mdl-shadow--16dp';
 	card.setAttribute('align','center');
-	card.setAttribute('width',imgWidth);
+	//card.setAttribute('width',imgWidth);
 
 	// create mdl-card__media and put in card
 	var card__media = document.createElement('div');
+	card__media.setAttribute('align', 'center');
 	card__media.className = 'mdl-card__media';
 	card.appendChild(card__media);
 	
 	//add img to the card__media
 	var img = document.createElement('img');
 	img.id = 'img'+index;
-	img.setAttribute('width',imgWidth);
-	img.setAttribute('height',imgHeight);
 	img.setAttribute('style', "padding:"+imgPadding+"px;");
-	//img.setAttirbute('border', 0);
+	img.setAttribute('border', imgBorder);
 	img.setAttribute('onerror', this.src="nanowires.png");
-	img.setAttribute('alt', "(0__0) can't connect to an image server "+index+"...");
+	img.setAttribute('alt', "(0__0) can't connect to image server "+ip+"...");
+	img.setAttribute('align', 'center');
+	img.onload = function() {
+		//whenever the pic loads (every second currently)
+	}
 	if(index < hosts.length){
 		//img.src = "http://"+ip+"/DataServer/GetFrontPanelControlImage";
-		img.src = "http://"+ip;  //ending has to be hard coded for now depending on which graph
+		img.src = ""+ip;  //ending has to be hard coded for now depending on which graph
 	}else{
 		img.src = "nanowires.png";
 	}
@@ -99,8 +130,8 @@ function newCard(index, ip){
 	//add supporting text description to the card
 	var desc = document.createElement('div');
 	desc.className = 'mdl-card__supporting-text';
-	desc.setAttribute('align','left');
-	desc.innerHTML = "This is a plot of random numbers, generated and plotted in a pointless VI.";
+	desc.setAttribute('align','center');
+	desc.innerHTML = "Insert Description Here.";
 	card.appendChild(desc);
 	
 	//add text field stuff for changing ip
@@ -109,18 +140,18 @@ function newCard(index, ip){
 	ipForm.setAttribute('action', '#');
 	ipForm.setAttribute("onsubmit", "updateHost("+index+", document.getElementById('host'+"+index+").value)");
 	var ipField = document.createElement('div');
-	ipField.className='mdl-textfield mdl-js-textfield';
+	ipField.className='mdl-textfield mdl-js-textfield mdl-textfield--floating-label';
 	var input = document.createElement('input');
 	input.className='mdl-textfield__input';
 	input.setAttribute('type','text');
 	input.setAttribute('value',ip);
 	input.setAttribute('id','host'+index);
-	//var label = document.createElement('label');
-	//label.className='mdl-textfield__label';
-	//label.setAttribute('for','host'+index);
-	//label.innerHTML = "Data Host IP";
+	//var label = document.createElement('label');//
+	//label.className='mdl-textfield__label';     //
+	//label.setAttribute('for','host'+index);     //
+	//label.innerHTML = "Data Host IP";           //
 	ipField.appendChild(input);
-	//ipField.appendChild(label);
+	//ipField.appendChild(label);					//
 	ipForm.appendChild(ipField);
 	ipFieldDiv.appendChild(ipForm);
 	card.appendChild(ipFieldDiv);
@@ -196,7 +227,7 @@ timeout = setInterval(updateImages, 1000);
 			<!-- Your content goes here -->
 				<!-- GRID -->
 				<div class="mdl-grid" id="card_grid">
-					<div align="center" class="mdl-cell mdl-cell--12-col" id="newGraph_Button_Cell">
+					<div align="center" class="mdl-cell mdl-cell--6-col" id="newGraph_Button_Cell">
 						<!-- Colored FAB button with ripple -->
 						<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" onClick="addGraph(document.getElementById('newGraphInput').value)">
 							<i class="material-icons">add</i>
@@ -216,7 +247,5 @@ timeout = setInterval(updateImages, 1000);
 			</div>
 		</main>
 	</div>
-	
-
 </body>
 </html>
