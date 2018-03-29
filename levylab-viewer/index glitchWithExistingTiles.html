@@ -37,8 +37,6 @@ var instrumentGridColumns = 6;
 var width;
 var height;
 var charts = 0;
-var cards = [];
-var images = [];
 
 
 
@@ -56,13 +54,7 @@ function initialize(){
 
 //newIp should include port
 function updateHost(whichHost, newIp){
-	
-	alert('updating host'+whichHost+' from '+hosts[whichHost]);
 	hosts[whichHost] = newIp;
-	//need to do:   img.setAttribute('alt', "(0__0) can't connect to image server "+ip+"...");
-	images[whichHost].setAttribute('alt', "(0__0) can't connect to image server "+newIp+"...");
-	alert('to '+hosts[whichHost]);
-	alert(cards.length+' cards');
 }
 
 function loadPreset1LocalHost(){
@@ -119,10 +111,8 @@ function newCell(content){
 }
 
 function removeCard(index){
-	cards.splice(index, 1);
 	document.getElementById('card'+index).remove();
 	hosts.splice(index, 1);
-	images.splice(index, 1);
 	charts--;
 	//alert(hosts.length);
 }
@@ -130,7 +120,6 @@ function removeCard(index){
 function newCard(index, ip){
 	// create new card and put it in the grid
 	var card = document.createElement('div');
-	cards.push(card);
 	card.id = 'card'+index;
 	card.className = 'chart-card mdl-cell mdl-cell--'+chartGridColumns+'-col mdl-color--grey-300 mdl-card mdl-shadow--16dp chartClass';
 	card.setAttribute('align','center');
@@ -171,7 +160,6 @@ function newCard(index, ip){
 		img.src = "nanowires.png";
 	}
 	card__media.appendChild(img);
-	images.push(img);
 	
 	//add supporting text description to the card
 	var desc = document.createElement('div');

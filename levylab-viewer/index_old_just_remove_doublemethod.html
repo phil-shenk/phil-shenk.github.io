@@ -7,10 +7,15 @@
 <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 
 <style>
-
 .chart-card.mdl-card {
   //width: 788px;
   //color: #aaaaaa;
+}
+.chartEntry{
+
+}
+.instrumentEntry{
+
 }
 
 .chart-card.mdl-card__media {
@@ -22,8 +27,7 @@
   width: 100%;
   color: #aaaaaa;
 }
-//.chartClass{}
-//.instrumentClass{}
+
 </style>
 
 <script>
@@ -32,13 +36,9 @@ var imgWidth = 768;
 var imgHeight = 513;
 var imgPadding = 0;
 var imgBorder = 0;
-var chartGridColumns = 6; //keep track of grid sizing
-var instrumentGridColumns = 6;
+var gridColumns = 6; //keep track of grid sizing
 var width;
 var height;
-var charts = 0;
-var cards = [];
-var images = [];
 
 
 
@@ -56,13 +56,7 @@ function initialize(){
 
 //newIp should include port
 function updateHost(whichHost, newIp){
-	
-	alert('updating host'+whichHost+' from '+hosts[whichHost]);
 	hosts[whichHost] = newIp;
-	//need to do:   img.setAttribute('alt', "(0__0) can't connect to image server "+ip+"...");
-	images[whichHost].setAttribute('alt', "(0__0) can't connect to image server "+newIp+"...");
-	alert('to '+hosts[whichHost]);
-	alert(cards.length+' cards');
 }
 
 function loadPreset1LocalHost(){
@@ -82,20 +76,20 @@ function loadPreset1(hostIP){
 }
 
 function setGraphCellSize(size){
-	chartGridColumns = size;
-	elements = document.getElementsByClassName("chartClass");
+	gridColumns = size;
+	elements = document.getElementsByClassName("mdl-cell");
 	for(i=0; i<elements.length; i++){
-		//elements.item(i).className = ("chart-card mdl-cell mdl-card mdl-shadow--16dp mdl-color--blue-grey-100 mdl-cell--"+chartGridColumns+"-col");
-		elements.item(i).className = ("chart-card mdl-cell mdl-card mdl-shadow--16dp mdl-cell--"+chartGridColumns+"-col mdl-color--grey-300 chartClass"); // mdl-color--blue-grey-100
+		//elements.item(i).className = ("chart-card mdl-cell mdl-card mdl-shadow--16dp mdl-color--blue-grey-100 mdl-cell--"+gridColumns+"-col");
+		elements.item(i).className = ("chart-card mdl-cell mdl-card mdl-shadow--16dp mdl-cell--"+gridColumns+"-col"); // mdl-color--blue-grey-100
 	}
 }
 
 function setInstrumentCellSize(size){
-	instrumentGridColumns = size;
-	elements = document.getElementsByClassName("instrumentClass");
+	gridColumns = size;
+	elements = document.getElementsByClassName("instrument-cell");
 	for(i=0; i<elements.length; i++){
-		//elements.item(i).className = ("chart-card mdl-cell mdl-card mdl-shadow--16dp mdl-color--blue-grey-100 mdl-cell--"+instrumentGridColumns+"-col");
-		elements.item(i).className = ("mdl-cell mdl-cell--"+instrumentGridColumns+"-col instrumentClass"); // mdl-color--blue-grey-100
+		//elements.item(i).className = ("chart-card mdl-cell mdl-card mdl-shadow--16dp mdl-color--blue-grey-100 mdl-cell--"+gridColumns+"-col");
+		elements.item(i).className = ("chart-card mdl-cell mdl-card mdl-shadow--16dp mdl-cell--"+gridColumns+"-col"); // mdl-color--blue-grey-100
 	}
 }
 
@@ -105,43 +99,24 @@ function addGraph(ip){
 	//to insert @ end:    document.getElementById('card_grid').appendChild(newCell(newCard(hosts.length, ip)));
 	document.getElementById('card_grid').insertBefore(newCard(hosts.length, ip), document.getElementById('newGraph_Button_Cell'));
 	hosts.push(ip);
-	charts++;
-	//alert(hosts.length);
 }
 
 //unused now(hopefully)
 function newCell(content){
 	var cell = document.createElement('div');
-	cell.className = 'mdl-cell mdl-cell--'+chartGridColumns+'-col chartClass';
+	cell.className = 'mdl-cell mdl-cell--'+gridColumns+'-col';
 	cell.setAttribute('align','center');
 	cell.appendChild(content);
 	return cell;
 }
 
-function removeCard(index){
-	cards.splice(index, 1);
-	document.getElementById('card'+index).remove();
-	hosts.splice(index, 1);
-	images.splice(index, 1);
-	charts--;
-	//alert(hosts.length);
-}
-
 function newCard(index, ip){
 	// create new card and put it in the grid
 	var card = document.createElement('div');
-	cards.push(card);
 	card.id = 'card'+index;
-	card.className = 'chart-card mdl-cell mdl-cell--'+chartGridColumns+'-col mdl-color--grey-300 mdl-card mdl-shadow--16dp chartClass';
+	card.className = 'chart-card mdl-cell mdl-cell--'+gridColumns+'-col mdl-color--grey-300 mdl-card mdl-shadow--16dp';
 	card.setAttribute('align','center');
 	//card.setAttribute('width',imgWidth);
-	
-	//add button to close the card
-	var button = document.createElement('button');
-	button.className='mdl-button mdl-js-button mdl-button--icon';
-	button.setAttribute('onClick','removeCard('+index+')');
-	button.innerHTML = "<i class='material-icons'>clear</i>";
-	card.appendChild(button);
 
 	// create mdl-card__media and put in card
 	var card__media = document.createElement('div');
@@ -171,7 +146,6 @@ function newCard(index, ip){
 		img.src = "nanowires.png";
 	}
 	card__media.appendChild(img);
-	images.push(img);
 	
 	//add supporting text description to the card
 	var desc = document.createElement('div');
@@ -201,10 +175,6 @@ function newCard(index, ip){
 	ipForm.appendChild(ipField);
 	ipFieldDiv.appendChild(ipForm);
 	card.appendChild(ipFieldDiv);
-	
-	
-	
-	
 	//alert(document.getElementById("host"+index).value);
 	//ipForm.setAttribute('onsubmit', 'updateHost('+index+', '+document.getElementById("host"+index).value+')');
 	
@@ -244,7 +214,6 @@ timeout = setInterval(updateImages, 1000);
 				</nav>
 			</div>
 		</header>
-
 		<div class="mdl-layout__drawer">
 			<span class="mdl-layout-title">Options</span>
 			<nav class="mdl-navigation">
@@ -252,37 +221,35 @@ timeout = setInterval(updateImages, 1000);
 				<a class="mdl-navigation__link" href="https://www.pqi.org/">Pittsburgh Quantum Institute</a>
 				<a class="mdl-navigation__link" href="http://pitt.edu/">University of Pittsburgh</a>
 				<br>
-				<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onClick="setGraphCellSize(6); setInstrumentCellSize(6);">
+				<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onClick="setGraphCellSize(6)">
 				Reset Cell Size
 				</button>
 				<br>
 				<div>
 					<!-- Slider with Starting Value -->
 					<input class="mdl-slider mdl-js-slider" type="range"
-						min="1" max="12" value=chartGridColumns tabindex="0" onInput="setGraphCellSize(value)">
-					<input class="mdl-slider mdl-js-slider" type="range"
-						min="1" max="12" value=instrumentGridColumns tabindex="0" onInput="setInstrumentCellSize(value)">
-				</div>
-					<div class="mdl-layout-spacer"></div>
+						min="1" max="12" value=gridColumns tabindex="0" onInput="setGraphCellSize(value)">
+					</div>
 				<div class="mdl-layout-spacer"></div>			
 				<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onClick="addGraph('localhost:8003')">
 					Create New Cell
 				</button>
 			</nav>
+			
 		</div>
 		
 		<main class="mdl-layout__content">
-			<div class="page-content" style="width:100%;">
+			<div class="page-content">
 				<!-- Big grid to divide whole thing in half -->
-				<!-- <div class="mdl-grid mdl-grid--no-spacing" id="big_grid"> -->
+				<div class="mdl-grid" id="big_grid">
 					<!-- grid to hold cards of graphs-->
-					
-					<div class="mdl-grid" id="card_grid" style="float:left; width:60%;">
-						<div align="center" class="chart-card mdl-cell mdl-cell--6-col mdl-color--grey-300 mdl-card mdl-shadow--16dp chartClass" id="newGraph_Button_Cell">
+					<div class="mdl-grid mdl-cell mdl-cell--6-col" id="card_grid">
+						<div align="center" class="mdl-cell mdl-cell--6-col" id="newGraph_Button_Cell">
 							<!-- Colored FAB button with ripple -->
 							<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" onClick="addGraph(document.getElementById('newGraphInput').value)">
 								<i class="material-icons">add</i>
 							</button>
+
 							<div>
 								<!-- Textfield with Floating Label -->
 								<form action="#" onsubmit="addGraph(document.getElementById('newGraphInput').value)">
@@ -295,30 +262,19 @@ timeout = setInterval(updateImages, 1000);
 						</div>
 					</div>
 					<!-- grid to hold instrument status info -->
-					<div class="mdl-grid" id="status_grid" style="float:left; width:35%; margin-left:0px;">
-						<div align="center" class="mdl-cell mdl-cell--6-col instrumentClass" id="newGraph_Button_Cell1">
+					<div class="mdl-grid mdl-cell mdl-cell--6-col" id="status_grid">
+						<div align="center" class="mdl-cell mdl-cell--6-col" id="newGraph_Button_Cell">
 							<h2>Fridge</h2>
 							<br>
 							<p> -insert fridge status here-
 						</div>
-						<div align="center" class="mdl-cell mdl-cell--6-col instrumentClass" id="newGraph_Button_Cell2">
+						<div align="center" class="mdl-cell mdl-cell--6-col" id="newGraph_Button_Cell">
 							<h2>Giant Magnet</h2>
 							<br>
 							<p> -insert giant magnet status here- </p>
 						</div>
-						<div align="center" class="mdl-cell mdl-cell--6-col instrumentClass" id="newGraph_Button_Cell3">
-							<h2>Cypher</h2>
-							<br>
-							<p> -insert cypher status here- </p>
-						</div>
-						<div align="center" class="mdl-cell mdl-cell--6-col instrumentClass" id="newGraph_Button_Cell4">
-							<h2>MFP-3D</h2>
-							<br>
-							<p> -insert mfp-3d status here- </p>
-						</div>
-						
 					</div>
-				<!--</div>-->
+				</div>
 			</div>
 		</main>
 	</div>
