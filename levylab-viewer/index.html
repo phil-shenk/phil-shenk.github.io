@@ -75,12 +75,12 @@ function initialize(){
 //newIp should include port
 function updateHost(whichHost, newIp){
 	
-	alert('updating host'+whichHost+' from '+hosts[whichHost]);
+	//alert('updating host'+whichHost+' from '+hosts[whichHost]);
 	hosts[whichHost] = newIp;
 	//need to do:   img.setAttribute('alt', "(0__0) can't connect to image server "+ip+"...");
 	images[whichHost].setAttribute('alt', "(0__0) can't connect to image server "+newIp+"...");
-	alert('to '+hosts[whichHost]);
-	alert(chartCards.length+' chartCards');
+	//alert('to '+hosts[whichHost]);
+	//alert(chartCards.length+' chartCards');
 }
 
 function loadPreset1LocalHost(){
