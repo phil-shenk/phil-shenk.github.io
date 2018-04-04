@@ -12,20 +12,11 @@
   //width: 788px;
   //color: #aaaaaa;
 }
+
 .chart-card.mdl-card__media {
   //color: #aaaaaa;
   width: 100%;
 }
-
-.inst-card.mdl-card {
-  //width: 788px;
-  //color: #aaaaaa;
-}
-.inst-card.mdl-card__media {
-  //color: #aaaaaa;
-  width: 100%;
-}
-
 .mdl-card__media > img {
   //max-width: 100%;
   width: 100%;
@@ -46,9 +37,7 @@ var instrumentGridColumns = 6;
 var width;
 var height;
 var charts = 0;
-var chartCards = [];
-var instCards = [];
-var instruments=0;
+var cards = [];
 var images = [];
 
 var DSC_Data = []; 
@@ -78,7 +67,7 @@ function updateHost(whichHost, newIp){
 	//need to do:   img.setAttribute('alt', "(0__0) can't connect to image server "+ip+"...");
 	images[whichHost].setAttribute('alt', "(0__0) can't connect to image server "+newIp+"...");
 	alert('to '+hosts[whichHost]);
-	alert(chartCards.length+' chartCards');
+	alert(cards.length+' cards');
 }
 
 function loadPreset1LocalHost(){
@@ -88,6 +77,7 @@ function loadPreset(preset, hostIP){
 	if(preset == 1){
 		loadPreset1(hostIP);
 	}
+	
 }
 function loadPreset1(hostIP){
 	addGraph(hostIP+"/DataServer/GetTransconductanceIntensity");
@@ -110,15 +100,15 @@ function setInstrumentCellSize(size){
 	elements = document.getElementsByClassName("instrumentClass");
 	for(i=0; i<elements.length; i++){
 		//elements.item(i).className = ("chart-card mdl-cell mdl-card mdl-shadow--16dp mdl-color--blue-grey-100 mdl-cell--"+instrumentGridColumns+"-col");
-		elements.item(i).className = ("inst-card mdl-cell mdl-cell--"+instrumentGridColumns+"-col instrumentClass"); // mdl-color--blue-grey-100
+		elements.item(i).className = ("mdl-cell mdl-cell--"+instrumentGridColumns+"-col instrumentClass"); // mdl-color--blue-grey-100
 	}
 }
 
 //high level function to add everything necessary for a new graph and set it up
 function addGraph(ip){
 	//make a new cell containing a new card @ index hosts.length with 'ip' as the src
-	//to insert @ end:    document.getElementById('card_grid').appendChild(newCell(newChartCard(hosts.length, ip)));
-	document.getElementById('card_grid').insertBefore(newChartCard(hosts.length, ip), document.getElementById('newGraph_Button_Cell'));
+	//to insert @ end:    document.getElementById('card_grid').appendChild(newCell(newCard(hosts.length, ip)));
+	document.getElementById('card_grid').insertBefore(newCard(hosts.length, ip), document.getElementById('newGraph_Button_Cell'));
 	hosts.push(ip);
 	charts++;
 	//alert(hosts.length);
@@ -133,25 +123,19 @@ function newCell(content){
 	return cell;
 }
 
-function removeChartCard(index){
-	chartCards.splice(index, 1);
+function removeCard(index){
+	cards.splice(index, 1);
 	document.getElementById('card'+index).remove();
 	hosts.splice(index, 1);
 	images.splice(index, 1);
 	charts--;
 	//alert(hosts.length);
 }
-function removeInstCard(index){
-	instCards.splice(index, 1);
-	document.getElementById('icard'+index).remove();
-	instruments--;
-	//alert(hosts.length);
-}
 
-function newChartCard(index, ip){
+function newCard(index, ip){
 	// create new card and put it in the grid
 	var card = document.createElement('div');
-	chartCards.push(card);
+	cards.push(card);
 	card.id = 'card'+index;
 	card.className = 'chart-card mdl-cell mdl-cell--'+chartGridColumns+'-col mdl-color--grey-300 mdl-card mdl-shadow--16dp chartClass';
 	card.setAttribute('align','center');
@@ -160,7 +144,7 @@ function newChartCard(index, ip){
 	//add button to close the card
 	var button = document.createElement('button');
 	button.className='mdl-button mdl-js-button mdl-button--icon';
-	button.setAttribute('onClick','removeChartCard('+index+')');
+	button.setAttribute('onClick','removeCard('+index+')');
 	button.innerHTML = "<i class='material-icons'>clear</i>";
 	card.appendChild(button);
 
@@ -232,36 +216,6 @@ function newChartCard(index, ip){
 	return card;
 }
 
-function newInstCard(index){
-	var key = DSC_Data[index].key;
-	var value = DSC_Data[index].value;
-	
-	// create new card and put it in the grid
-	var card = document.createElement('div');
-	instCards.push(card);
-	card.id = 'icard'+index;
-	card.className = 'inst-card mdl-cell mdl-cell--'+instrumentGridColumns+'-col mdl-color--grey-300 mdl-card mdl-shadow--16dp instrumentClass';
-	card.setAttribute('align','center');
-	//card.setAttribute('width',imgWidth);
-	
-	//add button to close the card
-	var button = document.createElement('button');
-	button.className='mdl-button mdl-js-button mdl-button--icon';
-	button.setAttribute('onClick','removeInstCard('+index+')');
-	button.innerHTML = "<i class='material-icons'>clear</i>";
-	card.appendChild(button);
-	
-	//add supporting text description to the card
-	var desc = document.createElement('div');
-	desc.className = 'mdl-card__supporting-text';
-	desc.setAttribute('align','center');
-	desc.innerHTML = ""+key+", "+value;
-	card.appendChild(desc);
-
-	instruments++;
-	return card;
-}
-
 function updateImage(whichImage){
 	//document.getElementById("img"+whichImage).src = ("http://"+hosts[whichImage]+"/DataServer/GetFrontPanelControlImage?time=" + new Date().getTime());
 	document.getElementById("img"+whichImage).src = ("http://"+hosts[whichImage]+"?time=" + new Date().getTime());
@@ -273,47 +227,75 @@ function updateImages(){
 	}
 }
 
-function initDSC(){
-	httpStuff(document.getElementById('httpStuffInput').value);
-	
-}
-function updateDscInfo(){
-	for(var i=0; i<DSC_Data.length; i++){
-		//alert(DSC_Data[i].key+' <key');
-		//alert(DSC_Data[i].value+' <value');
-		document.getElementById('status_grid').insertBefore(newInstCard(i), document.getElementById('httpStuffInput_Button_Cell'));
-	}
-}
-
 function httpStuff(theUrl){
+	alert("HttpStuff called on "+theUrl);
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.open("GET", theUrl, true);
 	xmlhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) { 
 			parser = new DOMParser();
 			xmlResult = parser.parseFromString(xmlhttp.responseText,"text/xml");
+			alert('hej::');
+			alert(xmlResult.data);
 			//lol this is garbage
 			var valueResult = $(xmlResult).find("Val").text();
+			alert(valueResult);
 			var strArray = valueResult.split('>');
-			DSC_Data.length = 0;
+			
 			for(var i = 0; i < strArray.length; i++){
+				alert(strArray[i]);
 				if(strArray[i].length > 1){
 					keyVal = strArray[i].split(',');
+					alert(keyVal[0]);
 					DSC_Data.push({
 						key:   keyVal[0],
 						value: keyVal[1]
 					});
 				}
 			}
-			updateDscInfo();
+			
 		}
 	};
 	xmlhttp.send();
 	return xmlhttp.responseText;
 }
+function httpGetAsync(theUrl, callback)
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() { 
+		alert('als icebucket challenge');
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            callback(xmlHttp.responseText);
+    }
+	alert('als icebuaaacket challenge');
+    xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+    xmlHttp.send(null);
+}
+function httpTest(url){
+alert('1');
+	var request = new XMLHttpRequest();
+	alert('2');
+	request.onreadystatechange = function() {
+		alert('3');
+		if (request.readyState === 4) {
+			alert('4');
+			if (request.status === 200) {
+				alert('bingo');
+				document.body.className = 'ok';
+				console.log(request.responseText);
+			} else if (!isValid(this.response) && this.status == 0) {
+				document.body.className = 'error offline';
+				console.log("The computer appears to be offline.");                
+			} else {
+				document.body.className = 'error';
+			}
+		}
+	};
+	request.open("GET", url , true);
+	request.send(null);
+}
+timeout = setInterval(updateImages, 1000);
 
-timeout1 = setInterval(updateImages, 10000);
-timeout2 = setInterval(updateDscInfo, 10000);
 
 </script>
 </head>
@@ -387,7 +369,33 @@ timeout2 = setInterval(updateDscInfo, 10000);
 					</div>
 					<!-- grid to hold instrument status info -->
 					<div class="mdl-grid" id="status_grid" style="float:left; width:35%; margin-left:0px;">
-						<div align="center" class="inst-card mdl-cell mdl-cell--6-col mdl-color--grey-300 mdl-card mdl-shadow--16dp chartClass" id="httpStuffInput_Button_Cell">
+						<div align="center" class="mdl-cell mdl-cell--6-col instrumentClass" id="newGraph_Button_Cell1">
+							<h2>Fridge</h2>
+							<br>
+							<p> -insert fridge status here-
+						</div>
+						<div align="center" class="mdl-cell mdl-cell--6-col instrumentClass" id="newGraph_Button_Cell2">
+							<h2>Giant Magnet</h2>
+							<br>
+							<p> -insert giant magnet status here- </p>
+						</div>
+						<div align="center" class="mdl-cell mdl-cell--6-col instrumentClass" id="newGraph_Button_Cell3">
+							<h2>Cypher</h2>
+							<br>
+							<p> -insert cypher status here- </p>
+						</div>
+						<div align="center" class="mdl-cell mdl-cell--6-col instrumentClass" id="newGraph_Button_Cell4">
+							<h2>MFP-3D</h2>
+							<br>
+							<p> -insert mfp-3d status here- </p>
+						</div>
+						<div align="center" class="mdl-cell mdl-cell--6-col instrumentClass" id="newGraph_Button_Cell4">
+							<h2>TEST</h2>
+							<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" onClick="httpStuff('http://localhost:3580/nicitadel/trace/Urist/TestProc/ravioli?dbpath=Urist/Default_Database')">
+								<i class="material-icons">add</i>
+							</button>
+						</div>
+						<div align="center" class="chart-card mdl-cell mdl-cell--6-col mdl-color--grey-300 mdl-card mdl-shadow--16dp chartClass" id="httpStuffInput_Button_Cell">
 							<!-- Colored FAB button with ripple -->
 							<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" onClick="addGraph(document.getElementById('httpStuffInput').value)">
 								<i class="material-icons">add</i>
@@ -402,6 +410,8 @@ timeout2 = setInterval(updateDscInfo, 10000);
 								</form>
 							</div>
 						</div>
+							
+						
 					</div>
 				<!--</div>-->
 			</div>
