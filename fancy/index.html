@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>REMOTE DATA VIEWER TEST</title>
+<title>Phil Shenk</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue_grey-indigo.min.css">
+<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue-indigo.min.css">
 <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 
 <style>
@@ -22,6 +22,44 @@
   color: #aaaaaa;
 }
 
+.phil-layout-transparent {
+  background: url('assets/earth.jpg') center / cover;
+}
+.phil-layout-transparent .mdl-layout__header,
+.phil-layout-transparent .mdl-layout__drawer-button {
+  color: white;
+}
+
+.wideboi-card.mdl-card {
+  width: 100%;
+  color: #fff;
+  opacity: 0;
+  background: url('assets/atlas.jpg') center / cover;
+  
+  transition: opacity 1s;
+}
+.wideboi-card > .mdl-card__title {
+  color: #fff;
+  height: 176px;
+  opacity: 1;
+}
+.wideboi-card > .mdl-card__menu {
+  color: #fff;
+  
+}
+.wideboi-card > .mdl-card__supporting-text {
+  color: #fff;
+  
+}
+.wideboi-card > .mdl-card__actions {
+  color: #000000;
+  
+}
+
+.wideboi-card:hover{
+	opacity: 1;
+}
+
 </style>
 
 <script>
@@ -38,27 +76,6 @@ var height;
 
 function initialize(){
 	
-}
-
-//newIp should include port
-function updateHost(whichHost, newIp){
-	hosts[whichHost] = newIp;
-}
-
-function loadPreset1LocalHost(){
-	loadPreset1('localhost:8001');
-}
-function loadPreset(preset, hostIP){
-	if(preset == 1){
-		loadPreset1(hostIP);
-	}
-	
-}
-function loadPreset1(hostIP){
-	addGraph(hostIP+"/DataServer/GetTransconductanceIntensity");
-	addGraph(hostIP+"/DataServer/GetConductanceIntensity");
-	addGraph(hostIP+"/DataServer/GetRawTransconductance");
-	addGraph(hostIP+"/DataServer/GetRawConductance");
 }
 
 function setCellSize(size){
@@ -158,38 +175,28 @@ function newCard(index, ip){
 	return card;
 }
 
-
+//style="background-color:grey;"
 </script>
 </head>
 
-<body onload="initialize()" background="wood.jpg">
+<body onload="initialize()" style="background-color: #000000;" >
+
 	<!-- Always shows a header, even in smaller screens. -->
-	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-		<header class="mdl-layout__header">
+	<div class="phil-layout-transparent mdl-layout mdl-js-layout mdl-layout--fixed-header">
+		<header class="mdl-layout__header mdl-layout__header--transparent">
 			<div class="mdl-layout__header-row">
-				<!-- Title -->
-				<span class="mdl-layout-title">LevyLab Data Viewer</span>
+				<span class="mdl-layout-title">Phil Shenk</span>
 				<!-- Add spacer, to align navigation to the right -->
 				<div class="mdl-layout-spacer"></div>
-				<!-- Navigation. We hide it in small screens. -->
-				<nav class="mdl-navigation mdl-layout--large-screen-only">
-					<a class="mdl-navigation__link" href="https://www.levylab.org/">LevyLab Homepage</a>
-					<a class="mdl-navigation__link" href="https://www.pqi.org/">Pittsburgh Quantum Institute</a>
-					<a class="mdl-navigation__link" href="http://pitt.edu/">University of Pittsburgh</a>
-				</nav>
 			</div>
 		</header>
 		<div class="mdl-layout__drawer">
-			<span class="mdl-layout-title">Options</span>
+			<span class="mdl-layout-title">W̞̙̲͓͉̤̟̖̯͔̻̰̩̣̦͙̱̼͌̿͒̇̾E͇̼̼̠͉̎͐̿͊L̦̳̱̥̗̭̫͖͓͙̥̮̟̞̠͙̹̿ͫ̌̎ͬͅC̭͓̠̤̹͙ͨ̆͗́ͬ̉̒̎̊̓̍̈ͮ̾̉̄̅̈O̰͇̘̣̹̼͎͔̖͕̪̜̺͙͎̫ͪ̈́̍̓ͪͪͧ́͑ͯͅͅM̼͎̪̜̿̄̇̀͐̔ͪE͉̖̤̻̝̫̙̱͚͔͇ͦ̄ͭ͐̓ͯ</span>
 			<nav class="mdl-navigation">
-				<a class="mdl-navigation__link" href="https://www.levylab.org/">LevyLab Homepage</a>
-				<a class="mdl-navigation__link" href="https://www.pqi.org/">Pittsburgh Quantum Institute</a>
-				<a class="mdl-navigation__link" href="http://pitt.edu/">University of Pittsburgh</a>
-				<br>
-				<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onClick="setCellSize(6)">
-				Reset Cell Size
-				</button>
-				<br>
+				<a class="mdl-navigation__link" href="https://www.wikipedia.org/">Wikipedia</a>
+				<a class="mdl-navigation__link" href="../index.html">intro page</a>
+
+
 				<div>
 					<!-- Slider with Starting Value -->
 					<input class="mdl-slider mdl-js-slider" type="range"
@@ -204,24 +211,50 @@ function newCard(index, ip){
 		</div>
 		
 		<main class="mdl-layout__content">
+			
 			<div class="page-content">
-			<!-- Your content goes here -->
 				<!-- GRID -->
-				<div class="mdl-grid" id="card_grid">
-					<div align="center" class="mdl-cell mdl-cell--6-col" id="newGraph_Button_Cell">
-						<!-- Colored FAB button with ripple -->
-						<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" onClick="addGraph(document.getElementById('newGraphInput').value)">
-							<i class="material-icons">add</i>
-						</button>
-
-						<div>
-							<!-- Textfield with Floating Label -->
-							<form action="#" onsubmit="addGraph(document.getElementById('newGraphInput').value)">
-							  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-								<input class="mdl-textfield__input" type="text" id="newGraphInput">
-								<label class="mdl-textfield__label" for="newGraphInput">Data Host IP ...</label>
-							  </div>
-							</form>
+				<div class="mdl-grid" id="content_grid">
+					<div id="welcomecard" class="wideboi-card mdl-cell mdl-card mdl-shadow--2dp">
+						<div class="mdl-card__title">
+							<h2 class="mdl-card__title-text">Welcome</h2>
+						</div>
+						<div class="mdl-card__supporting-text">
+							I'm Phil, this is my website.
+						</div>
+						
+						<div class="mdl-card__menu">
+							<button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+								<i class="material-icons">share</i>
+							</button>
+						</div>
+					</div>
+					<div class="wideboi-card mdl-cell mdl-card mdl-shadow--2dp">
+						<div class="mdl-card__title">
+							<h2 class="mdl-card__title-text">Welcome</h2>
+						</div>
+						<div class="mdl-card__supporting-text">
+							I'm Phil, this is my website.
+						</div>
+						
+						<div class="mdl-card__menu">
+							<button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+								<i class="material-icons">share</i>
+							</button>
+						</div>
+					</div>
+					<div class="wideboi-card mdl-cell mdl-card mdl-shadow--2dp">
+						<div class="mdl-card__title">
+							<h2 class="mdl-card__title-text">Welcome</h2>
+						</div>
+						<div class="mdl-card__supporting-text">
+							I'm Phil, this is my website.
+						</div>
+						
+						<div class="mdl-card__menu">
+							<button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+								<i class="material-icons">share</i>
+							</button>
 						</div>
 					</div>
 				</div>
