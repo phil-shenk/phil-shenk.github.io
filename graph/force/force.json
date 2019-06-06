@@ -1,0 +1,31 @@
+
+ 
+{"directed": true, "multigraph": false, "graph": {},
+"nodes": [
+ {"colour": "#99BB44", "group": 1, "name": "spin torque", "level": 1, "id": 0},
+ {"colour": "#990044", "group": 1, "name": "julie grollier", "level": 1, "id": 1},
+ {"colour": "#990044", "group": 1, "name": "spintronics", "level": 1, "id": 2},
+ {"colour": "#990044", "group": 1, "name": "spin", "level": 1, "id": 3},
+ {"colour": "#990044", "group": 1, "name": "decimation", "level": 1, "id": 4},
+ {"colour": "#990044", "group": 1, "name": "interpolation", "level": 1, "id": 5},
+ {"colour": "#990044", "group": 1, "name": "moire pattern", "level": 1, "id": 6},
+ {"colour": "#990044", "group": 1, "name": "angular momentum", "level": 1, "id": 7},
+
+ {"colour": "#990044", "group": 1, "name": "phil", "level": 1, "id": 8},
+ {"colour": "#990044", "group": 1, "name": "philip", "level": 1, "id": 9},
+ {"colour": "#990044", "group": 1, "name": "filiberto", "level": 1, "id": 10},
+ {"colour": "#990044", "group": 1, "name": "big mouth fwtang", "level": 1, "id": 11}],
+
+"links": [
+ {"source": 3, "target": 2, "weight": 10, "desc": "application"},
+ {"source": 3, "target": 0, "desc": "cool effect", "weight": 10},
+ {"source": 0, "target": 2, "desc": "mechanism", "weight": 10},
+ {"source": 0, "target": 1, "desc": "cool research", "weight": 10},
+ {"source": 4, "target": 5, "weight": 10, "desc": "inverse kinda"},
+ {"source": 4, "target": 6, "weight": 10, "desc": "can arise"},
+ {"source": 7, "target": 3, "weight": 10, "desc": "weird type"},
+
+ {"source": 9, "target": 8, "weight": 10, "desc": "nickname"},
+ {"source": 9, "target": 10, "weight": 10, "desc": "same root"},
+ {"source": 2, "target": 11, "desc": "mechanism", "weight": 10}
+]}
