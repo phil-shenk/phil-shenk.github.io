@@ -25,6 +25,10 @@ a:hover {
 	color:#FFAA22;
 }
 
+.row{
+	padding-top: 25%;
+}
+
 img {
 	width: 100%;
 	height: auto;
