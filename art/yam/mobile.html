@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Experience the yam</title>
+        <script src="https://preview.babylonjs.com/babylon.js"></script>
+        <!-- BabylonJS loaders to enable loading filetypes such as .gltf -->
+        <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+        <!-- Link to pep.js to ensure pointer events work consistently in all browsers -->
+        <script src="https://code.jquery.com/pep/0.4.1/pep.js"></script>
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/skeleton.css">
+    <!-- todo: put this in a style file-->
+    <style>
+        html, body {
+            overflow: hidden;
+            width   : 100%;
+            height  : 100%;
+            margin  : 0;
+            padding : 0;
+        }
+
+        #renderCanvas {
+            width   : 100%;
+            height  : 100%;
+            touch-action: none;
+        }
+
+        #loadingScreen{
+            width:100%;
+            height:100%;
+            background-color: #000000;
+            color: #ffffff;
+            text-align: center;
+        }
+    </style>
+
+    </head>
+    <body>
+        <div id="loadingScreen">
+            <div class="container">
+                <h1>entering yam</h1>
+                <h5><i>please be patient</i></h5>
+            </div>
+        </div>
+        <canvas id="renderCanvas"></canvas>
+
+        <script>
+            window.addEventListener('DOMContentLoaded', function(){ // run this once the DOM's done loading
+                var canvas = document.getElementById('renderCanvas');
+                var engine = new BABYLON.Engine(canvas,true);
+
+                var loadingScreenDiv = window.document.getElementById("loadingScreen");
+
+                function customLoadingScreen() {
+                    console.log("customLoadingScreen creation")
+                }
+                customLoadingScreen.prototype.displayLoadingUI = function () {
+                    console.log("customLoadingScreen loading")
+                    //loadingScreenDiv.innerHTML = "loading";
+                };
+                customLoadingScreen.prototype.hideLoadingUI = function () {
+                    console.log("customLoadingScreen loaded")
+                    loadingScreenDiv.style.display = "none";
+                };
+                var loadingScreen = new customLoadingScreen();
+                engine.loadingScreen = loadingScreen;
+
+                engine.displayLoadingUI();
+
+                var createScene = function(){
+                    
+                    var scene = new BABYLON.Scene(engine);
+                    var camera = new BABYLON.DeviceOrientationCamera("DevOr_camera", new BABYLON.Vector3(0, 0, 2), scene);
+
+                    // Targets the camera to a particular position
+                    camera.setTarget(new BABYLON.Vector3(0, 0, 0));
+
+                    // Sets the sensitivity of the camera to movement and rotation
+                    camera.angularSensibility = 10;
+                    camera.moveSensibility = 10;
+
+                    // Attach the camera to the canvas
+                    camera.attachControl(canvas, true);
+
+                    
+                    
+                    var light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0,1,0), scene);
+                    //var sphere = BABYLON.MeshBuilder.CreateSphere('sphere', {segments:5, diameter:2}, scene);
+                    //sphere.position.y = 1;
+                    //var ground = BABYLON.MeshBuilder.CreateGround('ground1',{height:6, width:6, subdivisions:2},scene);
+                    
+                    return scene;
+                }
+
+                
+
+                var scene = createScene();
+                
+                BABYLON.SceneLoader.Append("./", "yam.babylon", scene, function (meshes, particleSystems, skeletons) {
+                    // do something with the meshes and skeletons
+                   // particleSystems are always null for glTF assets
+                   meshes.getMeshByName("yam").position.y = 0.75;
+                   //meshes.getMeshByName("yam").position.x = 0;
+                   console.log(meshes);
+                });
+
+
+                scene.onPointerDown = function(evt, pickResult){
+                    //try to pick
+                    if (pickResult.hit){
+                        console.log(pickResult.pickedMesh.name);
+                    }
+                }
+
+                engine.runRenderLoop(function(){
+                    scene.render();
+                });
+
+                window.addEventListener('resize', function(){
+                    engine.resize();
+                });
+            });
+        </script>
+    </body>
+</html>
