@@ -1,0 +1,54 @@
+.banner {
+  background-image: url('../images/mountain.jpg');
+  background-size: cover;
+  color: #FFFFFF;
+  padding-bottom: 25%;
+  padding-top: 25%;
+}
+
+.options {
+	background-color:#686868;
+	padding-bottom: 2%;
+	padding-top: 2%;
+	color:#C4C4C4;
+}
+
+
+.option {
+	padding-bottom: 2%;
+	padding-top: 2%;
+	
+}
+
+.description{
+	padding-right: 2%;
+	text-shadow: 2px 2px 4px #3c3c3c;
+}
+
+a {
+	text-decoration:none;
+	color:#C4C4C4;
+}
+a:hover {
+	color:#FFAA22;
+}
+
+img {
+	width: 100%;
+	height: auto;
+	box-shadow: 2px 2px 4px #3c3c3c;
+}
+video {
+	width:100%;
+	height: auto;
+	box-shadow: 2px 2px 4px #3c3c3c;
+}
+
+body{
+	background-color: #686868;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+body::-webkit-scrollbar {
+  display: none;
+}
