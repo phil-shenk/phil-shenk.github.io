@@ -7,8 +7,11 @@
 
 .banner{
 	background-color: #686868;
-	
+	padding-top: 5%;
+	padding-bottom: 5%;
 }
+
+
 
 .option {
 	padding-bottom: 2%;
@@ -51,6 +54,13 @@ html{
 	height: 100%;
 }
 
+.highlighted{
+	color: #FFAA22;
+}
+
+.portfolio-element {
+	padding-bottom: 5%;
+}
 /* Hide scrollbar for Chrome, Safari and Opera 
 body::-webkit-scrollbar {
   display: none;

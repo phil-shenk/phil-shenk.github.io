@@ -37,8 +37,11 @@
       <div class="row">
         <div class="one-half column">
 	  	  <h1>Programming Project Portfolio</h1>
-		  <br>
-		  <h5>phil</h5>
+        
+        <h5 class="highlighted">phil shenk</h5>
+      </div>
+      <div class="one-half column">
+          <h5>this page contains overviews for a couple of my favorite programming projects. </h5>
         </div>
       </div>
     </div>
@@ -46,37 +49,82 @@
 
   <div class="section darcc">
   <div class="container">
-
-		<h4>this page will contain overviews of my favorite programming projects. </h4>
-		<h4>It's still in development, so please check out my <u><a href="https://github.com/phil-shenk">github portfolio</a></u> in the meantime.</h4>
-
-		<h6><a href="https://phil-shenk.github.io">back to main page</a></h6>
-
-    <h2>Rendering billiards</h2>
-    <p>This project demonstrates the generation and texturing of spherical meshes, a simple version of the Blinn-Phong lighting model, and fake shadows.
-      The light source and the camera can be moved by the user's keyboard, and the camera can enter follow-mode to follow behind one of the billiard balls.
-      <br><br>
-      All of the linear transformations in this project make use of my linear algebra library, which can be found here: <a href="https://github.com/phil-shenk/linalglib">linalglib</a>
-    </p>
-    <div class="row">
-      <div class="four columns">
-        <img class="value-img" src="images/billiards/ball15.png">
-        closeup
-      </div>
-      <div class="four columns">
-        <img class="value-img" src="images/billiards/billiard_demo.gif">
-        animated demo
-      </div>
-      <div class="four columns">
-        <img class="value-img" src="images/billiards/side_shadow.png">
-        shadows
+    <div class="portfolio-element">
+      <h2>Parametrized Curve Renderer</h2>
+      <a href="https://github.com/phil-shenk/curve-generator-opengl">https://github.com/phil-shenk/curve-generator-opengl</a>
+      <p>This project demonstrates the representation of an arbitrary parametrized 3D curve. The curve is defined by functions of x, y and z,
+        and a 3D tube representation of the curve is generated and rendered in OpenGL. The camera can be rotated and zoomed with the mouse.
+        Take a look at the repository's readme to see some of the math that goes into making the tube vertices consistent.
+        <br><br>
+        All of the linear transformations in this project make use of my linear algebra library, which can be found here: <a href="https://github.com/phil-shenk/linalglib">https://github.com/phil-shenk/linalglib</a>
+      </p>
+      <div class="row">
+        <div class="four columns">
+          <img class="value-img" src="https://github.com/phil-shenk/curve-generator-opengl/blob/main/screenshots/refined_normal_calculation.png">
+          interesting curve
+        </div>
+        <div class="four columns">
+          <img class="value-img" src="https://github.com/phil-shenk/curve-generator-opengl/blob/main/screenshots/high_detail_screenshot1.png">
+          wobbly shape
+        </div>
+        <div class="four columns">
+          <img class="value-img" src="https://github.com/phil-shenk/curve-generator-opengl/blob/main/screenshots/spiral_screenshot.png">
+          simple spiral
+        </div>
       </div>
     </div>
 
+    <div class="portfolio-element">
+      <h2>Rendering billiards</h2>
+      <a href="https://github.com/phil-shenk/billiards-opengl">https://github.com/phil-shenk/billiards-opengl</a>
+      <p>This project demonstrates the generation and texturing of spherical meshes, a simple version of the Blinn-Phong lighting model, and fake shadows.
+        The light source and the camera can be moved by the user's keyboard, and the camera can enter follow-mode to follow behind one of the billiard balls.
+        <br><br>
+        All of the linear transformations in this project make use of my linear algebra library, which can be found here: <a href="https://github.com/phil-shenk/linalglib">https://github.com/phil-shenk/linalglib</a>
+      </p>
+      <div class="row">
+        <div class="four columns">
+          <img class="value-img" src="https://github.com/phil-shenk/billiards-opengl/blob/main/screenshots/ball15.png">
+          closeup of ball #15
+        </div>
+        <div class="four columns">
+          <img class="value-img" src="https://github.com/phil-shenk/billiards-opengl/blob/main/screenshots/billiard_demo.gif">
+          light motion & rolling demo
+        </div>
+        <div class="four columns">
+          <img class="value-img" src="https://github.com/phil-shenk/billiards-opengl/blob/main/screenshots/side_shadow.png">
+          shadows demo
+        </div>
+      </div>
+    </div>
+
+    <div class="portfolio-element">
+      <h2>Maze demonstration</h2>
+      <a href="https://github.com/phil-shenk/maze-solver-opengl">https://github.com/phil-shenk/maze-solver-opengl</a>
+      <p>This project demonstrates the generation and solving of a simple maze. After it is generated, the maze is rendered in 3D with OpenGL. The camera then moves through the maze in the order 
+        that it is traversed by the simple recursive solving algorithm. After the camera exits the far side, it walks back through the maze along the optimal path. 
+        <br><br>
+        All of the linear transformations in this project make use of my linear algebra library, which can be found here: <a href="https://github.com/phil-shenk/linalglib">https://github.com/phil-shenk/linalglib</a>
+      </p>
+      <div class="row">
+        <div class="four columns">
+          <!-- hopefully i don't move or rename these images haha -->
+          <img class="value-img" src="https://github.com/phil-shenk/maze-solver-opengl/blob/main/screenshots/top_screenshot.png">
+          top view
+        </div>
+        <div class="four columns">
+          <img class="value-img" src="https://github.com/phil-shenk/maze-solver-opengl/blob/main/screenshots/rotating_maze.gif">
+          animated traversal
+        </div>
+        <div class="four columns">
+          <img class="value-img" src="https://github.com/phil-shenk/maze-solver-opengl/blob/main/screenshots/side_view_screenshot.png">
+          angled perspective
+        </div>
+      </div>
+    </div>
+
+    <h6><a href="https://phil-shenk.github.io">back to main page</a></h6>
   </div>
-
-
-	  
   </div>
 <!-- End Document
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
