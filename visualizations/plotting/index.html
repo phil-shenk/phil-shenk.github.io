@@ -5,8 +5,9 @@
 		<title>TEMPLATE</title>
 		<style>
 			body {
-				margin: 0; 
+				margin: 0;
 				overflow: hidden;
+				font-size: 16px; /* Base font size for relative units */
 			}
 
 			#threejs-canvas {
@@ -15,35 +16,52 @@
 				height: 100vh;
 			}
 
-			#function-container {
+			.function-container {
+				display: flex;
+				flex-direction: column;
 				position: absolute;
-				top: 10px;
-				right: 10px;
+				top: 2vh; /* Relative to viewport height */
+				right: 2vw; /* Relative to viewport width */
+				width: 40vw; /* 40% of viewport width */
+				min-width: 200px; /* Fallback minimum width */
+				max-width: 80vw; /* Prevent it from becoming too wide */
+				height: auto;
+				min-height: 20vh; /* Minimum height relative to viewport */
+				max-height: 80vh; /* Prevent it from becoming too tall */
 				background-color: rgba(255, 255, 255, 0.8);
 				border: 1px solid #ccc;
-				border-radius: 8px;
-				padding: 10px;
+				border-radius: 0.5rem; /* Relative to root font size */
+				padding: 1rem; /* Consistent padding with rem units */
 				z-index: 1000;
-				box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+				box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1); /* Rem-based shadow */
+				resize: both;
+				overflow: auto;
 			}
 
-			#function-textbox {
-				width: 200px;
-				height: 100px;
-				border: none;
-				outline: none;
+			.function-textarea {
+				flex-grow: 1;
+				width: 100%; /* Stretch to container width */
+				border: 1px solid #ccc;
+				border-radius: 0.25rem; /* Subtle rounding */
+				padding: 0.5rem;
 				resize: none;
-				font-size: 14px;
-				border-radius: 4px;
-				padding: 5px;
+				box-sizing: border-box;
+				overflow: auto;
 			}
+
+			.function-container:active {
+				cursor: grabbing;
+			}
+
+			.function-container > .lil-gui {
+				width: 100%;
+				box-sizing: border-box;
+			}
+
 
 		</style>
-		<script type="module" crossorigin src="./assets/index-D-UCr77Z.js"></script>
+		<script type="module" crossorigin src="./assets/index-AUsEc6FU.js"></script>
 	</head>
-	<body>
-		<div id="function-container">
-			<textarea id="function-textbox" placeholder="Type here..."></textarea>
-		</div>
+	<body>
 	</body>
 </html>
